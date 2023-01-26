@@ -5,7 +5,11 @@ the pascal's triangle of integer n
 """
 
 def pascal_triangle(n):
-    """function that returns a pascal triangle"""
+    """
+    function returns a list of lists of integers
+    representing the pascal's triangle o f n
+    """
+
     if n <= 0:
         return []
     arr = []
@@ -16,4 +20,4 @@ def pascal_triangle(n):
             arr2.append(c)
             c = c * (i -j) // j
         arr.append(arr2)
-    return arr
+    return arr[1:]
