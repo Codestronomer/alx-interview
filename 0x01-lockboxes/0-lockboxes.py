@@ -24,8 +24,8 @@ def canUnlockAll(boxes):
     """
     if not boxes or type(boxes) is not list:
         return False
-    #if (len(boxes)) == 0:
-    #   return False
+    if (len(boxes)) == 0:
+        return False
     unlocked = boxes[0]
     for i in boxes[0]:
         for j in boxes[i]:
