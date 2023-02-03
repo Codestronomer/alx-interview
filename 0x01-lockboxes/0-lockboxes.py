@@ -27,12 +27,13 @@ def canUnlockAll(boxes):
         return False
     if (len(boxes)) == 0:
         return False
-    unlocked = boxes[0]
-    for i in boxes[0]:
-        for j in boxes[i]:
-            if (j != i) or (j == i + 1):
-                unlocked.append(i + 1)
-    for i in range(1, len(boxes)):
-        if i not in unlocked:
+
+    for i in range(1, len(boxes) - 1):
+        unlocked = False
+        for j in range(len(boxes)):
+            if i in boxes[j] and j != i:
+                unlocked = True
+                break
+        if not unlocked:
             return False
     return True
