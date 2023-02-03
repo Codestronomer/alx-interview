@@ -3,8 +3,8 @@
 
 """
 Module: 0-Lockboxes.py
-Problem: You have n number of locked boxes in front of you. 
-Each box is numbered sequentially from 0 to n - 1 and 
+Problem: You have n number of locked boxes in front of you.
+Each box is numbered sequentially from 0 to n - 1 and
 each box may contain keys to the other boxes.
 Write a method that determines if all the boxes can be opened.
 
@@ -16,6 +16,7 @@ Write a method that determines if all the boxes can be opened.
 - The first box boxes[0] is unlocked
 - Return True if all boxes can be opened, else return False
 """
+
 
 def canUnlockAll(boxes):
     """
