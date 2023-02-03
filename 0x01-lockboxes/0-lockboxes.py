@@ -33,7 +33,7 @@ def canUnlockAll(boxes):
             if box['open']:
                 # Open all boxes that box holds key for
                 for item in box['items']:
-                    if item <= len(boxes) and item >= 0:
+                    if item < len(boxes) and item >= 0:
                         map[item]['open'] = True
         i -= 1
 
