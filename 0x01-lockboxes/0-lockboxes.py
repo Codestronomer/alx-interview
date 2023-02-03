@@ -28,7 +28,7 @@ def canUnlockAll(boxes):
 
     # Iterate map and open boxes
     i = len(boxes)
-    while i > 0:
+    while i >= 0:
         for box in map.values():
             if box['open']:
                 # Open all boxes that box holds key for
