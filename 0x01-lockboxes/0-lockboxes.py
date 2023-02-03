@@ -28,14 +28,13 @@ def canUnlockAll(boxes):
 
     # Iterate map and open boxes
     i = len(boxes)
-    while i >= 0:
+    for i in range(1, len(boxes)):
         for box in map.values():
             if box['open']:
                 # Open all boxes that box holds key for
                 for item in box['items']:
                     if item < len(boxes) and item >= 0:
                         map[item]['open'] = True
-        i -= 1
 
     # Check if all boxes were opened
     for box in map.values():
