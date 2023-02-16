@@ -38,7 +38,7 @@ if __name__ == "__main__":
                 values = line.rstrip().split()
                 total_size += int(values[-1])
                 status_codes[values[-2]] += 1
-            except:
+            except Exception:
                 pass
             if i % 10 == 0:
                 printstats()
