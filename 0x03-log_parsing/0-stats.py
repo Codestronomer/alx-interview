@@ -34,10 +34,12 @@ if __name__ == "__main__":
         for i, line in enumerate(sys.stdin, start=1):
             if not re.match(regex, line):
                 continue
-            values = line.rstrip().split()
-            total_size += int(values[-1])
-            status_codes[values[-2]] += 1
-
+            try:
+                values = line.rstrip().split()
+                total_size += int(values[-1])
+                status_codes[values[-2]] += 1
+            except:
+                pass
             if i % 10 == 0:
                 printstats()
         printstats()
