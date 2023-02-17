@@ -10,9 +10,6 @@ import re
 total_size = 0
 status_codes = {'200': 0, '301': 0, '400': 0, '401': 0,
                 '403': 0, '404': 0, '405': 0, '500': 0}
-# regex = re.compile(r"^([0-9]*\.){3}\d* - \[(\d+-){2}\d+ "
-#                    r"(\d+:){2}\d+.\d+] \"\w+ /\w+/\d+ \w+/\d.\d\" \d+ \d+"
-#                    )
 
 
 def printstats():
@@ -28,10 +25,9 @@ def printstats():
         if count != 0:
             print("{}: {}".format(code, count))
 
+
 try:
     for i, line in enumerate(sys.stdin, start=1):
-#         if not re.match(regex, line):
-#             continue
         try:
             values = line.rstrip().split()
             total_size += int(values[-1])
