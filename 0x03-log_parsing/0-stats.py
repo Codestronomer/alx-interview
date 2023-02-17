@@ -7,40 +7,40 @@ import sys
 import re
 
 
-stats = {
-    '200': 0,
-    '301': 0,
-    '400': 0,
-    '401': 0,
-    '403': 0,
-    '404': 0,
-    '405': 0,
-    '500': 0
-}
-sizes = [0]
+total_size = 0
+status_codes = {'200': 0, '301': 0, '400': 0, '401': 0,
+                '403': 0, '404': 0, '405': 0, '500': 0}
+regex = re.compile(r"^([0-9]*\.){3}\d* - \[(\d+-){2}\d+ "
+                   r"(\d+:){2}\d+.\d+] \"\w+ /\w+/\d+ \w+/\d.\d\" \d+ \d+"
+                   )
 
 
-def print_stats():
-    print('File size: {}'.format(sum(sizes)))
-    for s_code, count in sorted(stats.items()):
-        if count:
-            print('{}: {}'.format(s_code, count))
-
+def printstats():
+    """
+    prints the required statistics gotten from the logs
+    Args:
+        None
+    Return:
+        None
+    """
+    print("File size: {}".format(total_size))
+    for code, count in sorted(status_codes.items()):
+        if count != 0:
+            print("{}: {}".format(code, count))
 
 try:
     for i, line in enumerate(sys.stdin, start=1):
-        matches = line.rstrip().split()
+        if not re.match(regex, line):
+            continue
         try:
-            status_code = matches[-2]
-            file_size = matches[-1]
-            if status_code in stats.keys():
-                stats[status_code] += 1
-            sizes.append(int(file_size))
+            values = line.rstrip().split()
+            total_size += int(values[-1])
+            status_codes[values[-2]] += 1
         except Exception:
             pass
         if i % 10 == 0:
-            print_stats()
-    print_stats()
+            printstats()
+    printstats()
 except KeyboardInterrupt:
-    print_stats()
+    printstats()
     raise
