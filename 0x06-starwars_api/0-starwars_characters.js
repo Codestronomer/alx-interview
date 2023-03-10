@@ -3,14 +3,13 @@
 let request = require('request');
 const promisify = require('util').promisify;
 
-// turn module to a promise object
-request = promisify(request);
 
+request = promisify(request);
 const num = process.argv[2];
 
 const getChars = async () => {
   try {
-    const res = await request(`https://swapi-api.alx-tools.com/api/films/${num}`);
+    const res = await (await request(`https://swapi-api.alx-tools.com/api/films/${num}`));
     const chars = JSON.parse(res.body).characters;
     chars.forEach(getname);
   } catch (err) {
@@ -20,7 +19,7 @@ const getChars = async () => {
 
 const getname = async (character) => {
   try {
-    const res = await request(character);
+    const res = await (await request(character));
     console.log(JSON.parse(res.body).name);
   } catch (err) {
     console.log(err);
