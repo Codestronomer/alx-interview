@@ -3,27 +3,27 @@
 let request = require('request');
 const promisify = require('util').promisify;
 
-
 request = promisify(request);
 const num = process.argv[2];
 
 const getChars = async () => {
   try {
-    const res = await (await request(`https://swapi-api.alx-tools.com/api/films/${num}`));
+    const res = await request(`https://swapi-api.alx-tools.com/api/films/${num}`);
     const chars = JSON.parse(res.body).characters;
-    chars.forEach(getname);
+    return chars;
   } catch (err) {
     console.log(err);
   }
 };
 
-const getname = async (character) => {
+getChars().then(async (characters) => {
   try {
-    const res = await (await request(character));
-    console.log(JSON.parse(res.body).name);
+    for (const character of characters) {
+      const res = await request(character);
+      const name = JSON.parse(res.body).name;
+      console.log(name);
+    }
   } catch (err) {
     console.log(err);
   }
-};
-
-getChars();
+});
