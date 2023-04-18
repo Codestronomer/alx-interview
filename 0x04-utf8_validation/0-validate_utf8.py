@@ -1,52 +1,29 @@
 #!/usr/bin/python3
-"""
-Define validUTF8(data) function that validates whether a
-string of ints represents a valid UTF-8 encoding.
-"""
-from itertools import takewhile
-
-
-def int_to_bits(nums):
-    """
-    Helper function
-    Convert ints to bits
-    """
-    for num in nums:
-        bits = []
-        mask = 1 << 8  # cause we have 8 bits per byte. adds up to (11111111)
-        while mask:
-            mask >>= 1
-            bits.append(bool(num & mask))
-        yield bits
+"""Defines the validUTF8 function"""
 
 
 def validUTF8(data):
-    """
-    Takes a list of ints and returns true if the list is
-    a valid UTF-8 encoding, else returns false
+    """Checks if a given dataset represents a valid UTF8 encoding
     Args:
-        data : List of ints representing possible UTF-8 encoding
-    Return:
-        bool : True or False
+        data (List[int]): List of integers
+    Returns:
+        bool: returns true if the given dataset is valid UTF8, else false
     """
-    bits = int_to_bits(data)
-    for byte in bits:
-        # if single byte char, then valid. continue
-        if byte[0] == 0:
-            continue
 
-        # if here, byte is multi-byte char
-        ones = sum(takewhile(bool, byte))
-        if ones <= 1:
-            return False
-        if ones >= 4:  # UTF-8 can be 1 to 4 bytes long
-            return False
+    byte_count = 0
 
-        for _ in range(ones - 1):
-            try:
-                byte = next(bits)
-            except StopIteration:
+    for i in data:
+        if byte_count == 0:
+            if i >> 5 == 0b110 or i >> 5 == 0b1110:
+                byte_count = 1
+            elif i >> 4 == 0b1110:
+                byte_count = 2
+            elif i >> 3 == 0b11110:
+                byte_count = 3
+            elif i >> 7 == 0b1:
                 return False
-            if byte[0:2] != [1, 0]:
+        else:
+            if i >> 6 != 0b10:
                 return False
-    return True
+            byte_count -= 1
+    return byte_count == 0
